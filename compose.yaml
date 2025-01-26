@@ -1,0 +1,26 @@
+services:
+  # Define the web service for the Next.js app.
+  web:
+  
+    environment:
+      - MONGO_URI=mongodb+srv://momo123:momo123@cluster0.bnbzv.mongodb.net/dockerproj
+      - AUTH_SECRET=123
+      - AUTH_URL=http://localhost:3000
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./next.config.js
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: .
+          target: /app
+          action: sync
+
+  # Define the MongoDB service. 
